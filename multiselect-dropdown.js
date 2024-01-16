@@ -13,22 +13,20 @@ style.innerHTML = `
 .multiselect-dropdown span.placeholder {
     margin-right: 0.5em;
     margin-bottom: 2px;
-    padding: 1px 0;
+    padding: 2px 0;
     border-radius: 4px;
     display: inline-block;
 }
 .multiselect-dropdown span.optext {
     border-radius: 10px;
-    background-color: #6DB6F6;
-    padding: 2px 0.75em;
+    padding: 0px 0.75em;
 }
 .multiselect-dropdown span.optext .optdel {
     float: right;
-    margin: 0 -6px 1px 5px;
-    font-size: 0.7em;
-    margin-top: 2px;
+    margin: 0 -6px 2px 5px;
+    font-size: 1em;
     cursor: pointer;
-    color: #666;
+    color: gray;
 }
 .multiselect-dropdown span.optext .optdel:hover {
     color: #c66;
@@ -58,6 +56,7 @@ style.innerHTML = `
     height: 15rem;
     overflow-y: auto;
     overflow-x: hidden;
+    text-align: left;
 }
 .multiselect-dropdown-list::-webkit-scrollbar {
     width: 6px;
@@ -155,12 +154,14 @@ function MultiselectDropdown(options) {
                     class: 'multiselect-dropdown-all-selector'
                 })
                 var ic = newEl('input', {
-                    type: 'checkbox'
+                    type: 'checkbox',
+                    checked: 'checked'
                 });
                 op.appendChild(ic);
                 op.appendChild(newEl('label', {
                     text: config.txtAll
                 }));
+                
 
                 op.addEventListener('click', () => {
                     op.classList.toggle('checked');
@@ -191,6 +192,7 @@ function MultiselectDropdown(options) {
             }
 
             Array.from(el.options).map(o => {
+                o.selected = true
                 var op = newEl('div', {
                     class: o.selected ? 'checked' : '',
                     optEl: o
@@ -221,10 +223,12 @@ function MultiselectDropdown(options) {
             div.refresh = () => {
                 div.querySelectorAll('span.optext, span.placeholder').forEach(t => div.removeChild(t));
                 var sels = Array.from(el.selectedOptions);
+                
                 if (sels.length > (el.attributes['multiselect-max-items']?.value ?? 5)) {
+                    let text = sels.length == el.options.length ? "All Modules" : sels.length + ' ' + config.txtSelected
                     div.appendChild(newEl('span', {
                         class: ['optext', 'maxselected'],
-                        text: sels.length + ' ' + config.txtSelected
+                        text: text
                     }));
                 } else {
                     sels.map(x => {
@@ -236,7 +240,7 @@ function MultiselectDropdown(options) {
                         if ((el.attributes['multiselect-hide-x']?.value !== 'true'))
                             c.appendChild(newEl('span', {
                                 class: 'optdel',
-                                text: '🗙',
+                                text: 'X',
                                 title: config.txtRemove,
                                 onclick: (ev) => {
                                     c.srcOption.listitemEl.dispatchEvent(new Event('click'));
@@ -249,8 +253,8 @@ function MultiselectDropdown(options) {
                     });
                 }
                 if (0 == el.selectedOptions.length) div.appendChild(newEl('span', {
-                    class: 'placeholder',
-                    text: el.attributes['placeholder']?.value ?? config.placeholder
+                    class: ['optext', 'maxselected'],
+                    text: "No Modules"
                 }));
             };
             div.refresh();
