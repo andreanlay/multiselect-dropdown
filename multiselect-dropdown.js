@@ -1,6 +1,7 @@
 var style = document.createElement('style');
 style.setAttribute("id", "multiselect_dropdown_styles");
 style.innerHTML = `
+/* Multiselect dropdown container */
 .multiselect-dropdown {
     display: inline-block;
     padding: 2px 5px 0px 5px;
@@ -9,6 +10,8 @@ style.innerHTML = `
     background-color: white;
     position: relative;
 }
+
+/* Option text and placeholder styles */
 .multiselect-dropdown span.optext,
 .multiselect-dropdown span.placeholder {
     margin-right: 0.5em;
@@ -17,10 +20,14 @@ style.innerHTML = `
     border-radius: 4px;
     display: inline-block;
 }
+
+/* Option text style */
 .multiselect-dropdown span.optext {
     border-radius: 10px;
     padding: 0px 0.75em;
 }
+
+/* Option delete icon */
 .multiselect-dropdown span.optext .optdel {
     float: right;
     margin: 0 -6px 2px 5px;
@@ -28,17 +35,23 @@ style.innerHTML = `
     cursor: pointer;
     color: gray;
 }
+
+/* Hover effect for option delete icon */
 .multiselect-dropdown span.optext .optdel:hover {
     color: #c66;
 }
+
+/* Placeholder text style */
 .multiselect-dropdown span.placeholder {
     color: #ced4da;
 }
+
+/* Dropdown list wrapper */
 .multiselect-dropdown-list-wrapper {
-    box-shadow: gray 0 3px 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     z-index: 100;
     padding: 2px;
-    border-radius: 4px;
+    border-radius: 10px;
     border: solid 1px #ced4da;
     display: none;
     margin: -1px;
@@ -48,41 +61,64 @@ style.innerHTML = `
     right: 0;
     background: white;
 }
+
+/* Search input in dropdown list */
 .multiselect-dropdown-list-wrapper .multiselect-dropdown-search {
     margin-bottom: 5px;
+    padding: 6.5px;
+    outline-color: #3690eb;
 }
+
+/* Dropdown list styles */
 .multiselect-dropdown-list {
     padding: 2px;
     height: 15rem;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: scroll;
     text-align: left;
+    white-space: nowrap;
 }
+
+/* Scrollbar styles */
 .multiselect-dropdown-list::-webkit-scrollbar {
-    width: 6px;
+    height: 0px;
+    width: 2px;
 }
+
+/* Scrollbar thumb styles */
 .multiselect-dropdown-list::-webkit-scrollbar-thumb {
     background-color: #bec4ca;
     border-radius: 3px;
 }
+
+/* Dropdown entry container */
 .multiselect-dropdown-list div {
     padding: 5px;
 }
+
+/* Dropdown entry checkbox */
 .multiselect-dropdown-list input {
-    height: 1.15em;
-    width: 1.15em;
     margin-right: 0.35em;
 }
+
+/* Checked state for dropdown entry */
 .multiselect-dropdown-list div.checked {}
+
+/* Hover effect for dropdown entry */
 .multiselect-dropdown-list div:hover {
-    background-color: #ced4da;
+    background-color: #e3e6e8;
 }
+
+/* Max selected indicator */
 .multiselect-dropdown span.maxselected {
     width: 100%;
 }
+
+/* All selector styles */
 .multiselect-dropdown-all-selector {
     border-bottom: solid 1px #999;
 }
+
 `;
 document.head.appendChild(style);
 
@@ -94,7 +130,7 @@ function MultiselectDropdown(options) {
         txtSelected: 'selected',
         txtAll: 'All',
         txtRemove: 'Remove',
-        txtSearch: 'search',
+        txtSearch: 'Search module',
         ...options
     };
 
